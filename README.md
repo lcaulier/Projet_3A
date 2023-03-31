@@ -1,7 +1,8 @@
+
 Projet_3A
 ==============================
 
-A short description of the project.
+Classification (front, ingredients, nutritional values) of Open Food Facts Images to detect errors in the database.
 
 Project Organization
 ------------
@@ -55,3 +56,52 @@ Project Organization
 --------
 
 <p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
+
+
+
+
+
+## Installation
+
+Install my-project’s required python packages with pip
+
+```bash
+  cd my-project
+  pip install requirements.txt
+```
+You will also need to have software installed to run and execute a Jupyter Notebook.
+
+## Create Dataset
+
+The first step is to create a set of Open Food Facts images classified in 3 categories: Front, Ingredients, Nutritional Values.
+
+To do this, we will have to download the CSV export in .gz from the Open Food Facts website and put it in data/external.
+
+Then the command below allows you to classify the images in data/raw with a square format to be defined in the command.
+
+```bash
+  python src\data\make_dataset.py data\external\en.openfoodfacts.org.products.cs "Image sizes"
+```
+
+These preprocessed images are stored in data/preprocessed as input_image_sizes.npy and output_image_sizes.npy. These 2 files correspond to the X and Y to provide to our deep learning models.
+This avoids RAM problems on local computers.
+
+
+
+## CNN training
+
+The command below allows to launch a training of the CNN allowing to classify if an image is front or not. The first argument following the file train.py corresponds to the **input file** at the input of the model, the second to the **output**, the third to the **size of the images** on which our model will train and the last to the **name of our training**.
+In this example we had saved inputs and outputs in size 224 and we named this training test1.
+
+```bash
+python  src/models/train_model.py  input_array_224.npy  output_array_224.npy  224  test1
+```
+Inside the **_train.py_** file many training parameters can be modified such as the number of _epochs_, the _batchsize_, the _learning rate_, the _validation split_.
+
+The results of the training will be stored in the /models folder. A first sub-folder named train+model_name contains the metrics that can be viewed in tensorboard with the command below (to be adapted according to the name given to the training).
+
+```bash
+tensorboard --logdir models/test1
+```
+
+A second sub-folder named model_name corresponds to the saved Keras model which can then be reused later.
