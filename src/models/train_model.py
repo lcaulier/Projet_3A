@@ -176,12 +176,17 @@ def main(input_filepath, output_filepath, size_image_input, model_name):
         "./models/train_" + model_name + "/classification_report.csv", index=True
     )
 
+    # Save Hyperparameters to text file
+    hyperparameters_str = f"NUM_EPOCHS={NUM_EPOCHS}\nBATCH_SIZE={BATCH_SIZE}\nVALIDATION_SPLIT={VALIDATION_SPLIT}\nPROPORTION_TRAIN_TEST={PROPORTION_TRAIN_TEST}\nLEARNING_RATE={LEARNING_RATE}"
+    with open("./models/train_" + model_name + "/hyperparameters.txt", "w") as f:
+        f.write(hyperparameters_str)
 
-NUM_EPOCHS = 2
-BATCH_SIZE = 10
+
+NUM_EPOCHS = 11
+BATCH_SIZE = 32
 VALIDATION_SPLIT = 0.1
 PROPORTION_TRAIN_TEST = 0.8
-LEARNING_RATE = 0.001
+LEARNING_RATE = 0.0001
 
 if __name__ == "__main__":
     main()
