@@ -92,7 +92,7 @@ def create_model(size_image_input, lr):
 
     classifier.compile(
         optimizer=Adam(learning_rate=lr),
-        loss="binary_crossentropy",
+        loss="binary_focal_crossentropy",
         metrics=["accuracy", "AUC"],
     )
     return classifier
@@ -166,12 +166,11 @@ def main(input_filepath, output_filepath, size_image_input, model_name):
     # Print Classification report
     print("Classification report:")
     print(classification_report(y_test[:, 0], y_pred, zero_division=0))
-    # Conversion du rapport de classification en DataFrame Pandas
+
+    # Save Classification report in a CSV file
     df_report = pd.DataFrame(
         classification_report(y_test[:, 0], y_pred, output_dict=True)
     ).transpose()
-
-    # Save Classification report in a CSV file
     df_report.to_csv(
         "./models/train_" + model_name + "/classification_report.csv", index=True
     )

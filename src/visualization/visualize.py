@@ -4,6 +4,7 @@ import numpy as np
 import click
 import matplotlib.pyplot as plt
 import seaborn as sns
+import pandas as pd
 from PIL import Image
 from keras.models import load_model
 from tensorflow.keras.utils import load_img
@@ -64,10 +65,17 @@ def main(model_name, input, output):
     plt.xlabel("Prédits")
     plt.ylabel("Vraies valeurs")
     plt.show()
+    plt.savefig("./src/visualization/confusion_matrix.png")
 
     # Print Classification report
     print("Classification report:")
     print(classification_report(y_true, y_pred, zero_division=0))
+
+    # Save Classification report in a CSV file
+    df_report = pd.DataFrame(
+        classification_report(y_true, y_pred, output_dict=True)
+    ).transpose()
+    df_report.to_csv("./src/visualization/classification_report.csv", index=True)
     return
 
 
