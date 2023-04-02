@@ -98,10 +98,22 @@ python  src/models/train_model.py  input_array_224.npy  output_array_224.npy  22
 ```
 Inside the **_train.py_** file many training parameters can be modified such as the number of _epochs_, the _batchsize_, the _learning rate_, the _validation split_.
 
-The results of the training will be stored in the /models folder. A first sub-folder named train+model_name contains the metrics that can be viewed in tensorboard with the command below (to be adapted according to the name given to the training).
+The results of the training will be stored in the **_/models_** folder. A first sub-folder named **_train+model_name_** contains the metrics that can be viewed in tensorboard with the command below (to be adapted according to the name given to the training). In the same sub-folder, there is the confusion matrix, the classification ratio and the hyperparameters used for training.
 
 ```bash
 tensorboard --logdir models/test1
 ```
 
-A second sub-folder named model_name corresponds to the saved Keras model which can then be reused later.
+A second sub-folder named **_model_name_** corresponds to the saved Keras model which can then be reused later.
+
+## Visualization
+
+The command below launches the program visualization.py which returns a classification report and a confusion matrix on the 3 classes (front, ingredients, nutritional values).
+
+```bash
+python  src/models/visualize.py  input_array_224.npy  output_array_224.npy  model_name
+```
+
+## Notebook
+
+In the notebook folder, we have collected all the jupyter notebooks that were useful to us in creating these models as well as some of the explorations we made. In the notebooks there is a brief description of its use.
